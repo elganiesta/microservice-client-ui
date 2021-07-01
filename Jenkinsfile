@@ -1,24 +1,36 @@
 pipeline{
-    agent {
-        docker {
-            image "maven:3-jdk-8"
-        }
+
+    environment {
+        registry = "elganiesta/clientui"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
     }
 
+    agent any
+
     stages{
-        stage("Build"){
+        stage("Maven build"){
             steps{
+                echo "======== Maven build ========"
                 sh "mvn clean package"
             }
         }
-        stage("Test"){
+        stage("Docker build"){
             steps{
-                echo "======== Testing ========"
+                echo "======== Docker build ========"
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
             }
         }
-        stage("Deploy"){
+        stage("Docker deploy"){
             steps{
-                echo "======== Deploying ========"
+                echo "======== Docker deploy ========"
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        dockerImage.push()
+                    }
+                }
             }
         }
     }
