@@ -6,13 +6,17 @@ pipeline{
         dockerImage = ''
     }
 
-    agent any
+    agent {
+        docker {
+            image: 'maven:3-jdk-8'
+        }
+    }
 
     stages{
         stage("Maven build"){
             steps{
                 echo "======== Maven build ========"
-                sh "mvn clean package"
+                sh "mvn package -B"
             }
         }
         stage("Docker build"){
