@@ -33,6 +33,11 @@ pipeline{
                 }
             }
         }
+        stage("Kubernetes deploy"){
+            steps{
+                echo "======== Kubernetes deploy ========"
+            }
+        }
     }
     post{
         success{
