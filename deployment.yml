@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clientui-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mclientui
+  template:
+    metadata:
+      labels:
+        app: mclientui
+    spec:
+      containers:
+      - name: mclientui
+        image: elganiesta/clientui:12
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clientui-service
+spec:
+  selector:
+    app: mclientui
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 30000
