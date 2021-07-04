@@ -1,37 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mclientui
+spec:
+  selector:
+    app: microservice-clientui
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 30000
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: clientui-deployment
+  name: clientui-deploy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mclientui
+      app: microservice-clientui
   template:
     metadata:
       labels:
-        app: mclientui
+        app: microservice-clientui
     spec:
       containers:
-      - name: mclientui
-        image: elganiesta/clientui:13
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: clientui-service
-spec:
-  selector:
-    app: mclientui
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
-      nodePort: 30000
+        - name: microservice-clientui
+          image: achrafpipo99/clientui:third
+          ports:
+            - name: http
+              containerPort: 8080

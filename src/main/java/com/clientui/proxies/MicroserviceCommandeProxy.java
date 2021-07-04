@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "microservice-commandes", url = "mcommandes")
+@FeignClient(name = "microservice-commandes", url = "mcommandes:9002")
 public interface MicroserviceCommandeProxy {
 
     @PostMapping(value = "/commandes")
