@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mclientui
-        image: elganiesta/clientui:12
+        image: elganiesta/clientui:13
         resources:
           limits:
             memory: "128Mi"
@@ -32,6 +32,6 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 80
+      port: 8080
       targetPort: 8080
       nodePort: 30000
