@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: microservice-clientui
-          image: achrafpipo99/clientui:third
+          image: elganiesta/clientui:17
           ports:
             - name: http
               containerPort: 8080
